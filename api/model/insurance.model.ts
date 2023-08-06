@@ -52,4 +52,5 @@ const InsuranceSchema: Schema = new Schema({
     configurations: [configurations]
 });
 
-export const InsuranceModel: Model<ITask> = model<ITask>('tasks', InsuranceSchema);
+// export const InsuranceModel: Model<ITask> = model<ITask>('policies', InsuranceSchema);
+export const InsuranceModel: Model<any> = model<any>('policies', InsuranceSchema);

@@ -18,7 +18,17 @@ export class InsuranceService {
     async createItem(item) {
         let data = {};
         try {
-            data = await InsuranceModel.create(item);
+            let currentUser = await InsuranceModel.findOne({userName:item.userName});
+            if(currentUser === null) {
+                data = await InsuranceModel.create(item);
+            } else {
+                const newUser = {...currentUser._doc, ...item}
+                console.log('currentUser::', currentUser)
+                await InsuranceModel.findByIdAndUpdate(currentUser._id, newUser, { new: true, useFindAndModify: false });
+                // console.log('item::', item)
+            }
+
+
         } catch(err) {
             this.logger.error('Error::' + err);
         }
