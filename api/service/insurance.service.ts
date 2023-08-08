@@ -1,6 +1,7 @@
-import {InsuranceModel} from "../model/insurance.model";
+import {InsuranceModel, PriceRelationModel} from "../model/insurance.model";
 import {connect} from "../config/db.config";
 import {APILogger} from "../logger/api.logger";
+import {prices} from './mocks';
 
 export class InsuranceService {
     private logger: APILogger;
@@ -14,10 +15,18 @@ export class InsuranceService {
         console.log('data:::', items);
         return items;
     }
-
+    async fillPrices() {
+        try {
+            await PriceRelationModel.create(prices)
+        } catch(err) {
+            console.log(err)
+        }
+    }
     async createItem(item) {
         let data = {};
         try {
+             // was used once, to initial filling the PriceRelationModel model with data
+            // await this.fillPrices()
             let currentUser = await InsuranceModel.findOne({userName:item.userName});
             if(currentUser === null) {
                 data = await InsuranceModel.create(item);

@@ -1,15 +1,5 @@
 import { model, Schema, Model, Document } from 'mongoose';
-
-export interface ITask extends Document {
-    task: string;
-    assignee: string;
-    status: string;
-    createDate: Date, 
-    updatedDate: Date;
-    createdBy: string;
-    updatedBy: string;
-    timestamps?: {};
-}
+import { Iconfigurations, Icoverages, Idiscounts, IUser } from '../../sharedTypes';
 
 const coverages: Schema = new Schema({
     bonusProtection: Number,
@@ -37,9 +27,12 @@ const configurations: Schema = new Schema({
     strongCarSurcharge: Number,
     priceMatch: Number,
     totalSum: Number
-
 })
 
+
+export interface IExtendedUser extends IUser, Document {
+    _doc: {}
+}
 const InsuranceSchema: Schema = new Schema({
     userName: {type: String, required: true},
     userBirthDate: {type: Date, default: Date.now},
@@ -52,5 +45,18 @@ const InsuranceSchema: Schema = new Schema({
     configurations: [configurations]
 });
 
-// export const InsuranceModel: Model<ITask> = model<ITask>('policies', InsuranceSchema);
-export const InsuranceModel: Model<any> = model<any>('policies', InsuranceSchema);
+export const InsuranceModel: Model<IExtendedUser> = model<IExtendedUser>('policies', InsuranceSchema);
+
+const prices = new Schema({
+    age: Number,
+    price: Number
+})
+
+const priceRelations: Schema = new Schema([prices])
+
+export interface IPrices extends Document {
+    age: number,
+    price: number
+}
+
+export const PriceRelationModel: Model<IPrices> = model<IPrices>('price_relation', priceRelations);

@@ -1,8 +1,15 @@
 import React from 'react'
 
-const Header = ()=> {
+const Header = ({onChange, commercialDiscount }: any)=> {
     return (
-        <p>header</p>
+        <div className='header-form'>
+            <div className={'form-group'}>
+                <label>
+                    Name:
+                </label>
+                <input name='userName' onChange={onChange} value={commercialDiscount}  type="checkbox"  />
+            </div>
+        </div>
     )
 }
 export default Header
