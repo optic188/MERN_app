@@ -1,0 +1,9 @@
+.coverage-sidebar {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  .form-group {
+    flex: 1;
+    padding: 10px 0   10px 35px;
+  }
+}

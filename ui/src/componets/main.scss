@@ -1,0 +1,32 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.right-sidebar {
+  flex: 0 0 200px; /* Fixed width for the sidebar */
+  background-color: #f0f0f0;
+  position: sticky;
+  top: 0;
+  margin-left: auto; /* Pushes the sidebar to the right */
+}
+
+p {
+  margin: 0;
+}

@@ -1,3 +1,9 @@
 .header-form {
-
+  display: flex;
+  max-width: 900px;
+  justify-content: center;
+  .form-group {
+    flex: 1;
+    padding: 20px;
+  }
 }

@@ -5,6 +5,9 @@ import UserForm from "./userForm";
 import { IUser} from '../../../sharedTypes';
 import { IUserForm } from './userForm';
 import {createItem} from "../api";
+import {coveragesConfig, discountConfig} from './component-utils';
+import './main.scss';
+
 
 enum insuranceActionsTypes {
     SAVE_DATA_START = 'SAVE-DATA-START',
@@ -66,11 +69,19 @@ const Main = ()=> {
         }
     }
     return (
-        <>
-            <Header/>
-            <SideBar/>
-            <UserForm saveUserData={saveUserData} userPriceMatch={state.userPriceMatch} />
-        </>
+        <div className="page-container">
+            <header className="header">
+                <Header discountConfig={discountConfig}/>
+            </header>
+            <div className="content">
+                <main className="main-content">
+                    <UserForm saveUserData={saveUserData} userPriceMatch={state.userPriceMatch} />
+                </main>
+                <aside className="right-sidebar">
+                    <SideBar coveragesConfig={coveragesConfig}/>
+                </aside>
+            </div>
+        </div>
     )
 }
 export default Main

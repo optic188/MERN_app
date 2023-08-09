@@ -53,7 +53,7 @@ const UserForm = ({saveUserData, userPriceMatch}:any)=> {
     }
     return (
         <div className={'user-form'}>
-            <p>userForm</p>
+            <h2>User Data</h2>
             <div className={'form-group'}>
                 <label>
                     Name:
