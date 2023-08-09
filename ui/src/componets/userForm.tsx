@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
-import {createItem} from "../api";
+import React, {useEffect, useState} from 'react'
 import './userForm.scss';
-interface Iuser {
+
+export interface IUserForm {
     userName: string,
     userBirthDate: Date,
     userCity?: string,
@@ -9,11 +9,22 @@ interface Iuser {
     userVoucher?: number,
     userPriceMatch?: number
 }
-const UserForm = ()=> {
-    const [formItem, setForm] = useState<Iuser>({
+
+const UserForm = ({saveUserData, userPriceMatch}:any)=> {
+    const [formItem, setForm] = useState<IUserForm>({
         userName:'',
         userBirthDate: new Date(),
-        userVehiclePower:0 })
+        userVehiclePower:0,
+        userPriceMatch:userPriceMatch
+    })
+    useEffect(()=>{
+        setForm((prevState) => ({
+            ...prevState,
+            userPriceMatch:userPriceMatch
+        }));
+    }, [userPriceMatch])
+
+    console.log('userPriceMatch', userPriceMatch)
     const [error, setError] = useState(false)
     const [success, setSuccess] = useState(false)
 
@@ -34,7 +45,7 @@ const UserForm = ()=> {
             setError(false)
         }
         try {
-             await createItem(formItem)
+            saveUserData(formItem)
             setSuccess(true)
         } catch (err) {
             console.log(err)
@@ -77,7 +88,7 @@ const UserForm = ()=> {
                 <label>
                     Price match:
                 </label>
-                <input name='userPriceMatch' type="number" onChange={onChange} placeholder={'enter userVoucher discount'}/>
+                <input name='userPriceMatch'  value={formItem.userPriceMatch} type="number" onChange={onChange} placeholder={'enter userVoucher discount'}/>
             </div>
             {error && <p className='error'>Birth date, Vehicle power, Name fields are required </p>}
             {success && <p className='success'> Form send success </p>}
