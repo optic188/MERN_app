@@ -1,13 +1,13 @@
 import React from 'react'
 import './headrForm.scss';
 
-const Header = ({onChange, commercialDiscount, discountConfig, totalPrice }: any)=> {
+const Header = ({onChange, discountConfig, totalPrice }: any)=> {
     return (
         <div className='header-form'>
             {discountConfig.map((elem: any )=>{
                 return (
                 <div className={'form-group'}>
-                    <input name={elem.name} onChange={onChange} value={elem.value}  type="checkbox"  />
+                    <input name={elem.name} onChange={onChange} checked={elem.value}  type="checkbox"  />
                     <label>
                         {elem.title}
                     </label>

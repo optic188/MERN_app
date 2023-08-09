@@ -9,7 +9,7 @@ const SideBar = ({coveragesConfig,onChange }: any)=> {
                 {coveragesConfig.map((elem: any )=>{
                     return (
                         <div className={'form-group'}>
-                            <input name={elem.name} onChange={onChange} value={elem.value}  type="checkbox"  />
+                            <input name={elem.name} onChange={onChange} checked={elem.value}  type="checkbox"  />
                             <label>
                                 {elem.title}:
                             </label>
