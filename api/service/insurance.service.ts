@@ -2,7 +2,9 @@ import {InsuranceModel, PriceRelationModel} from "../model/insurance.model";
 import {connect} from "../config/db.config";
 import {APILogger} from "../logger/api.logger";
 import {prices} from './mocks';
-import { calculateAgeFromBirthdate } from './utils'
+import {calculateAgeFromBirthdate, calculateInsuranceConfiguration} from './utils'
+import {IUser} from "../../sharedTypes";
+
 export class InsuranceService {
     private logger: APILogger;
     constructor() {
@@ -22,44 +24,41 @@ export class InsuranceService {
             console.log(err)
         }
     }
-    async createItem(item) {
-        let data = {};
+    async createItem(item:IUser) {
+        let calculatedItem = {}
         try {
              // was used once, to initial filling the PriceRelationModel model with data
             // await this.fillPrices()
-            if(!item.userPriceMatch) {
+            console.log('createItem', item);
+            if(!item.userPriceMatch || item.userPriceMatch === 0) {
                 const userAge = calculateAgeFromBirthdate(item.userBirthDate)
-                console.log('userAge', userAge);
                 const priceMatch = await PriceRelationModel.findOne({age:userAge })
-                data = {...data, userPriceMatch:priceMatch.price }
-                item = {...item, userPriceMatch:priceMatch.price }
+                item = {...item, userPriceMatch: priceMatch.price }
             }
+            calculatedItem = calculateInsuranceConfiguration(item)
             let currentUser = await InsuranceModel.findOne({userName:item.userName});
             if(currentUser === null) {
-                const tempData = await InsuranceModel.create(item);
-                data = {...data, ...tempData }
+                return  await InsuranceModel.create(calculatedItem);
             } else {
-                const newUser = {...currentUser._doc, ...item}
-                console.log('currentUser::', currentUser)
-                data = await InsuranceModel.findByIdAndUpdate(currentUser._id, newUser, { new: true, useFindAndModify: false });
-                // console.log('item::', item)
+                const newUser = {...currentUser._doc, ...calculatedItem}
+                return  await InsuranceModel.findByIdAndUpdate(currentUser._id, newUser, { new: true, useFindAndModify: false });
             }
-
 
         } catch(err) {
             this.logger.error('Error::' + err);
         }
-        return data;
     }
 
     async updateItem(item) {
-        let data = {};
         try {
-            data = await InsuranceModel.findOneAndUpdate(item);
+            const calculatedItem = calculateInsuranceConfiguration(item)
+            const newUser = {...item._doc, ...calculatedItem}
+            console.log('calculatedItem',newUser)
+            return  await InsuranceModel.findOneAndUpdate({userName:item.userName}, newUser, {new:true});
+
         } catch(err) {
             this.logger.error('Error::' + err);
         }
-        return data;
     }
 
     async resetItem(itemId) {

@@ -15,21 +15,21 @@ export interface Icoverages {
     glassCoverage: number
 }
 export interface Idiscounts {
-    commercialDiscount: number,
-    agentDiscount: number,
-    summerDiscount: number,
+    commercialDiscount?: number,
+    agentDiscount?: number,
+    summerDiscount?: number,
     strongCarSurcharge: number
 }
 
 type IinsuranceOptionPartial = Partial<{coverages:Icoverages, discounts: Idiscounts}>
 export interface IUser {
     userName: string,
-    userBirthDate: Date,
+    userBirthDate: string,
     userCity: string,
     userVehiclePower: number,
     userVoucher: number,
     userPriceMatch: number,
     userTotalSum: number,
     insuranceOption: IinsuranceOptionPartial,
-    configurations: Iconfigurations[] | [],
+    configurations: any[] | [],
 }

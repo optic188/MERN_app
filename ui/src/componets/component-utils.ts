@@ -5,17 +5,7 @@ export const discountConfig = [
         value: false
     },
     {
-        name:'agentsDiscount',
-        title: 'Agents Discount',
-        value: false
-    },
-    {
-        name:'summerDiscount',
-        title: 'Summer Discount',
-        value: false
-    },
-    {
-        name:'summerDiscount',
+        name:'strongCarSurcharge',
         title: 'Strong Car Surcharge',
         value: true
     },

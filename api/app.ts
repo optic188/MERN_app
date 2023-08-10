@@ -36,8 +36,8 @@ class App {
             this.insuranceController.createInsuranceItem(req.body.data).then(data => res.json(data));
         });
         
-        this.express.put('/api/insuranceItem/adjust', (req, res) => {
-            this.insuranceController.updateInsuranceItem(req.body.task).then(data => res.json(data));
+        this.express.put('/api/insuranceItem/update', (req, res) => {
+            this.insuranceController.updateInsuranceItem(req.body.data).then(data => res.json(data));
         });
 
         this.express.get("/", (req, res, next) => {

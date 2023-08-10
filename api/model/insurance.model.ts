@@ -18,15 +18,10 @@ const insuranceOption: Schema = new Schema({
     discounts: discounts
 })
 const configurations: Schema = new Schema({
-    bonusProtection: Number,
-    aOPlus: Number,
-    glassCoverage: Number,
-    commercialDiscount: Number,
-    agentDiscount: Number,
-    summerDiscount: Number,
-    strongCarSurcharge: Number,
-    priceMatch: Number,
-    totalSum: Number
+    arrayOfMaps: [{
+        type: Map,
+        of: Number, // Specify the value type (string in this case)
+    }],
 })
 
 
@@ -42,7 +37,10 @@ const InsuranceSchema: Schema = new Schema({
     userPriceMatch: {type: Number, required: false},
     userTotalSum: {type: Number, required: false},
     insuranceOption: insuranceOption,
-    configurations: [configurations]
+    configurations: [{
+        type: Map,
+        of: Number, // Specify the value type (string in this case)
+    }],
 });
 
 export const InsuranceModel: Model<IExtendedUser> = model<IExtendedUser>('policies', InsuranceSchema);

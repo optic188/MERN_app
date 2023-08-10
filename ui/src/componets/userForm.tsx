@@ -24,12 +24,10 @@ const UserForm = ({saveUserData, userPriceMatch}:any)=> {
         }));
     }, [userPriceMatch])
 
-    console.log('userPriceMatch', userPriceMatch)
+    // console.log('userPriceMatch', userPriceMatch)
     const [error, setError] = useState(false)
-    const [success, setSuccess] = useState(false)
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>)=> {
-        setSuccess(false)
         const { name, value } = event.target;
         setForm((prevState) => ({
             ...prevState,
@@ -46,7 +44,6 @@ const UserForm = ({saveUserData, userPriceMatch}:any)=> {
         }
         try {
             saveUserData(formItem)
-            setSuccess(true)
         } catch (err) {
             console.log(err)
         }
@@ -82,16 +79,17 @@ const UserForm = ({saveUserData, userPriceMatch}:any)=> {
                 <label>
                     userVoucher:
                 </label>
-                <input name='userVoucher' type="number" onChange={onChange} placeholder={'enter userVoucher discount'}/>
+                <input name='userVoucher' type="number"  onChange={onChange} placeholder={'enter userVoucher discount'}/>
+                <span> EUR</span>
             </div>
             <div className={'form-group'}>
                 <label>
                     Price match:
                 </label>
                 <input name='userPriceMatch'  value={formItem.userPriceMatch} type="number" onChange={onChange} placeholder={'enter userVoucher discount'}/>
+                <span> EUR</span>
             </div>
             {error && <p className='error'>Birth date, Vehicle power, Name fields are required </p>}
-            {success && <p className='success'> Form send success </p>}
             <button onClick={onClick}>Click me</button>
         </div>
     )
