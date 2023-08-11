@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import './sideBar.scss';
 import {coveragesConfig} from './component-utils';
+import {UseClearForm} from "./custom-hooks";
 
 interface DynamicObject {
     [key: string]: any;
 }
 interface ISideBar {
     onChange:(data:Record<any, any>) => void
+    resetForm?: boolean
 }
-const SideBar: React.FC<ISideBar> = ({ onChange })=> {
+const SideBar: React.FC<ISideBar> = ({ onChange, resetForm })=> {
     const [optionState, setOptionState] = useState(coveragesConfig)
     const [key, setKey] = useState(0)
 
@@ -30,6 +32,13 @@ const SideBar: React.FC<ISideBar> = ({ onChange })=> {
         })
         onChange({coverages:resObj})
     }, [key])
+
+    /**
+     * Custom hooks
+     */
+
+    UseClearForm(resetForm, setOptionState)
+
     return (
         <>
             <h2>Coverages</h2>

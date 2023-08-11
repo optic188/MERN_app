@@ -1,3 +1,8 @@
+export interface IDiscountConfig {
+    name: string,
+    title: string,
+    value: boolean
+}
 export const discountConfig = [
     {
         name:'commercialDiscount',

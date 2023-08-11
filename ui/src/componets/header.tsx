@@ -1,6 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, SetStateAction} from 'react'
 import './headrForm.scss';
-import {discountConfig} from './component-utils';
+import {discountConfig, IDiscountConfig} from './component-utils';
+import {Simulate} from "react-dom/test-utils";
+import reset = Simulate.reset;
+import {UseClearForm} from "./custom-hooks";
 
 interface DynamicObject {
     [key: string]: any;
@@ -10,11 +13,12 @@ interface IHeader {
     totalPrice: number;
     userVehiclePower: number;
     coverageAmount?: number
+    resetForm?: boolean
 }
+type StateType = Function;
+const Header:React.FC<IHeader> = ({onChange, totalPrice, userVehiclePower, coverageAmount, resetForm })=> {
 
-const Header:React.FC<IHeader> = ({onChange, totalPrice, userVehiclePower, coverageAmount })=> {
-
-    const [optionState, setOptionState] = useState(discountConfig)
+    const [optionState, setOptionState] = useState<IDiscountConfig[]>(discountConfig)
     // to track the state updates
     const [key, setKey] = useState(0)
 
@@ -43,10 +47,14 @@ const Header:React.FC<IHeader> = ({onChange, totalPrice, userVehiclePower, cover
             })
             onChange({discounts:resObj})
     }, [key])
+    /**
+     * Custom hooks
+     */
+    UseClearForm(resetForm, setOptionState)
 
     useEffect(()=> {
         if(userVehiclePower > 80 && optionState.length <= 4) {
-            setOptionState(prevArray => {
+            setOptionState((prevArray:IDiscountConfig[]) => {
                 const newArray = [...prevArray];
                 newArray.splice(1, 0,  {
                     name:'summerDiscount',
@@ -56,7 +64,7 @@ const Header:React.FC<IHeader> = ({onChange, totalPrice, userVehiclePower, cover
                 return newArray;
             });
         } else {
-            setOptionState(prevArray => {
+            setOptionState((prevArray:IDiscountConfig[]) => {
                 const newArray = [...prevArray];
                 return  newArray.filter((elem)=> elem.name !== 'summerDiscount');
             });
@@ -64,8 +72,8 @@ const Header:React.FC<IHeader> = ({onChange, totalPrice, userVehiclePower, cover
     }, [userVehiclePower])
 
     useEffect(()=> {
-        if(coverageAmount === 2) {
-            setOptionState(prevArray => {
+        if(coverageAmount === 3) {
+            setOptionState((prevArray:IDiscountConfig[]) => {
                 const newArray = [...prevArray];
                 if (!newArray.some(obj => obj.name === 'agentDiscount')) {
                     newArray.splice(1, 0, {

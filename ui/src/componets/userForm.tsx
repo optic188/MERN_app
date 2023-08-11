@@ -9,8 +9,11 @@ export interface IUserForm {
     userVoucher?: number,
     userPriceMatch?: number
 }
-
-const UserForm = ({saveUserData, userPriceMatch}:any)=> {
+interface IUserFormComp {
+    userPriceMatch: number;
+    saveUserData: (data: IUserForm) => void
+}
+const UserForm: React.FC<IUserFormComp> = ({saveUserData, userPriceMatch})=> {
     const [formItem, setForm] = useState<IUserForm>({
         userName:'',
         userBirthDate: new Date(),

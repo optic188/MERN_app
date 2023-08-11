@@ -48,6 +48,7 @@ interface extendedUser extends IUser {
     loading: boolean,
     error?: Record<any, any>,
     success?: boolean,
+    resetForm?: false
 }
 
 const reducer = (state: extendedUser, action: Action): extendedUser => {
@@ -65,6 +66,7 @@ const reducer = (state: extendedUser, action: Action): extendedUser => {
                 loading: false,
                 error: undefined,
                 success: true,
+                resetForm: true,
                 ...action.payload
             }
         case insuranceActionsTypes.SAVE_DATA_START_ERROR:
@@ -79,32 +81,23 @@ const reducer = (state: extendedUser, action: Action): extendedUser => {
                 ...state,
                 loading: true,
                 success: undefined,
+                resetForm: false,
                 error: undefined
             }
         case insuranceActionsTypes.UPDATE_INSURANCE_OPTIONS_SUCCESS:
             const res =  {
                 ...state,
                 loading: false,
+                resetForm: false,
                 success: true,
                 ...action.payload
             }
-            console.log(res);
             return res
         case insuranceActionsTypes.ERROR_MESSAGE:
             return  {
                 ...state,
                error: {message: action.payload},
             }
-        // case insuranceActionsTypes.UPDATE_INSURANCE_OPTIONS_SUCESS:
-        //     const res =  {
-        //         ...state,
-        //         loading: false,
-        //         insuranceOption: {
-        //             ...state.insuranceOption,
-        //             ...action.payload
-        //         }
-        //     }
-        //     return res
         default :
             return state
     }
@@ -158,18 +151,18 @@ const Main = ()=> {
             </div>
             <header className="header">
                 <Header onChange={updateInsuranceDetails}
-                        // discountState={state.insuranceOption.discounts}
                         totalPrice={state.userTotalSum}
                         userVehiclePower={state.userVehiclePower}
+                        resetForm={state.resetForm}
                         coverageAmount={state.insuranceOption?.coverages&& Object.keys(state.insuranceOption.coverages).length}
                 />
             </header>
             <div className="content">
                 <main className="main-content">
-                    <UserForm saveUserData={saveUserData} userPriceMatch={state.userPriceMatch} coverageAmount={2} />
+                    <UserForm saveUserData={saveUserData} userPriceMatch={state.userPriceMatch} />
                 </main>
                 <aside className="right-sidebar">
-                    <SideBar onChange={updateInsuranceDetails} />
+                    <SideBar onChange={updateInsuranceDetails} resetForm={state.resetForm} />
                 </aside>
             </div>
             <div className='insurance-configuration'>
