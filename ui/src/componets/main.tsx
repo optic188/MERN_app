@@ -173,7 +173,6 @@ const Main = ()=> {
                         res.push(<p>{i}    :    <span>{elem[i]}</span></p>)
                     }
                     res.push(<p>----------------------</p>)
-
                     return res
                 })}
             </div>

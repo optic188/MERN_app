@@ -1,5 +1,6 @@
 import {IUser} from "../../sharedTypes";
 
+// Check the user age
 export const calculateAgeFromBirthdate = (birthdateISO: string):number => {
     const birthdate = new Date(birthdateISO);
     const currentDate = new Date();
@@ -9,6 +10,7 @@ export const calculateAgeFromBirthdate = (birthdateISO: string):number => {
 
     return Math.floor(ageInYears);
 }
+// General calculations
 export const calculateInsuranceConfiguration = (data: IUser)=> {
     let discounts = data.insuranceOption.discounts
     let covereges = data.insuranceOption.coverages

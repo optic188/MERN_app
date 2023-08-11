@@ -1,5 +1,5 @@
 import { model, Schema, Model, Document } from 'mongoose';
-import { Iconfigurations, Icoverages, Idiscounts, IUser } from '../../sharedTypes';
+import { IUser } from '../../sharedTypes';
 
 const coverages: Schema = new Schema({
     bonusProtection: Number,
@@ -16,12 +16,6 @@ const discounts: Schema = new Schema({
 const insuranceOption: Schema = new Schema({
     coverages:coverages,
     discounts: discounts
-})
-const configurations: Schema = new Schema({
-    arrayOfMaps: [{
-        type: Map,
-        of: Number, // Specify the value type (string in this case)
-    }],
 })
 
 
