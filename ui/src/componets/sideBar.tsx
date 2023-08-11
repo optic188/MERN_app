@@ -5,8 +5,10 @@ import {coveragesConfig} from './component-utils';
 interface DynamicObject {
     [key: string]: any;
 }
-
-const SideBar = ({ onChange }: any)=> {
+interface ISideBar {
+    onChange:(data:Record<any, any>) => void
+}
+const SideBar: React.FC<ISideBar> = ({ onChange })=> {
     const [optionState, setOptionState] = useState(coveragesConfig)
     const [key, setKey] = useState(0)
 

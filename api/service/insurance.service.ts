@@ -29,7 +29,6 @@ export class InsuranceService {
         try {
              // was used once, to initial filling the PriceRelationModel model with data
             // await this.fillPrices()
-            console.log('createItem', item);
             if(!item.userPriceMatch || item.userPriceMatch === 0) {
                 const userAge = calculateAgeFromBirthdate(item.userBirthDate)
                 const priceMatch = await PriceRelationModel.findOne({age:userAge })
@@ -53,7 +52,6 @@ export class InsuranceService {
         try {
             const calculatedItem = calculateInsuranceConfiguration(item)
             const newUser = {...item._doc, ...calculatedItem}
-            console.log('calculatedItem',newUser)
             return  await InsuranceModel.findOneAndUpdate({userName:item.userName}, newUser, {new:true});
 
         } catch(err) {

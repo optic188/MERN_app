@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+# How  to run the project
+2 folders,  api and ui , 
+inside each folder npm i , 
+and appropriate command from package json to launch ui and server.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
