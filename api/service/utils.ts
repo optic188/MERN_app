@@ -11,9 +11,27 @@ export const calculateAgeFromBirthdate = (birthdateISO: string):number => {
 }
 export const calculateInsuranceConfiguration = (data: IUser)=> {
     let discounts = data.insuranceOption.discounts
+    let covereges = data.insuranceOption.coverages
+    const userAge = calculateAgeFromBirthdate(data.userBirthDate)
     let res:Record<any, any> = {'Basic price':data.userPriceMatch }
     let totalSum = data.userPriceMatch
     let coverageAmount = 0;
+    if(covereges?.bonusProtection) {
+        const discountAmount = (data.userPriceMatch * 12) / 100;
+        res['Bonus Protection'] = discountAmount
+        coverageAmount += discountAmount
+        totalSum = totalSum + discountAmount
+    }
+    if(covereges?.aOPlus) {
+        const discountAmount = userAge < 30 ? 55 : 105;
+        res['AO+'] = discountAmount
+        totalSum = totalSum + discountAmount
+    }
+    if(covereges?.glassCoverage) {
+        const discountAmount = (data.userVehiclePower*80)/100;
+        res['Glass Protection'] = discountAmount
+        totalSum = totalSum + discountAmount
+    }
     if(discounts.strongCarSurcharge === 1 && Number(data.userVehiclePower) > 100) {
         const discountAmount = (data.userPriceMatch * 10) / 100;
         res['Strong Car Surcharge'] = discountAmount

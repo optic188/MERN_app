@@ -5,15 +5,14 @@ import {discountConfig} from './component-utils';
 interface DynamicObject {
     [key: string]: any;
 }
+interface IHeader {
+    onChange: (data: Record<any, any>)=>void;
+    totalPrice: number;
+    userVehiclePower: number;
+    coverageAmount?: number
+}
 
-const Header:React.FC<any> = ({onChange, discountState, totalPrice, userVehiclePower, coverageAmount })=> {
-    // const [optionState, setOptionState] = useState(discountConfig.map((elem: any) => {
-    //      if(discountState[elem.name] !== undefined){
-    //          return {...elem, value:true}
-    //      } else {
-    //          return elem
-    //      }
-    // }))
+const Header:React.FC<IHeader> = ({onChange, totalPrice, userVehiclePower, coverageAmount })=> {
 
     const [optionState, setOptionState] = useState(discountConfig)
     // to track the state updates
@@ -68,11 +67,13 @@ const Header:React.FC<any> = ({onChange, discountState, totalPrice, userVehicleP
         if(coverageAmount === 2) {
             setOptionState(prevArray => {
                 const newArray = [...prevArray];
-                newArray.splice(1, 0, {
+                if (!newArray.some(obj => obj.name === 'agentDiscount')) {
+                    newArray.splice(1, 0, {
                     name:'agentDiscount',
                     title: 'Adviser discount ',
                     value: false
                 });
+                }
                 return newArray;
             });
         }

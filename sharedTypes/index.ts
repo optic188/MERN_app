@@ -10,9 +10,9 @@ export interface Iconfigurations {
     totalSum: number
 }
 export interface Icoverages {
-    bonusProtection: number,
-    aOPlus: number,
-    glassCoverage: number
+    bonusProtection?: number,
+    aOPlus?: number,
+    glassCoverage?: number
 }
 export interface Idiscounts {
     commercialDiscount?: number,

@@ -17,13 +17,13 @@ export const coveragesConfig = [
         value: false
     },
     {
-        name:'ao',
+        name:'aOPlus',
         title: 'A0+',
         value: false
     },
     {
         name:'glassCoverage',
-        title: 'Glass Coverage',
+        title: 'Glass protection',
         value: false
     },
 ]

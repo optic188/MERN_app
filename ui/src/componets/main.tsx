@@ -5,7 +5,7 @@ import UserForm from "./userForm";
 import { IUser} from '../../../sharedTypes';
 import { IUserForm } from './userForm';
 import {createItem, updateItem} from "../api";
-import {coveragesConfig, discountConfig} from './component-utils';
+
 import './main.scss';
 
 enum insuranceActionsTypes {
@@ -37,7 +37,8 @@ const initialState = {
     insuranceOption: {
         discounts: {
             strongCarSurcharge: 1
-        }
+        },
+        coverages:{}
     },
     configurations: [],
     loading: false,
@@ -143,15 +144,12 @@ const Main = ()=> {
             }
             const { loading,  ...updatedObject } = payload;
             const res = await updateItem(updatedObject)
-            // console.log('state updated', res);
             dispatch({ type: insuranceActionsTypes.UPDATE_INSURANCE_OPTIONS_SUCCESS, payload: res });
         } catch (error) {
             dispatch({ type: insuranceActionsTypes.UPDATE_DATA_START_ERROR, payload: {err: error} });
         }
     }
-    // useEffect(() => {
-    //     // console.log('state updated', state);
-    // }, [state]);
+
     return (
         <div className="page-container">
             <div className='state-wrapper'>
@@ -160,10 +158,10 @@ const Main = ()=> {
             </div>
             <header className="header">
                 <Header onChange={updateInsuranceDetails}
-                        discountState={state.insuranceOption.discounts}
+                        // discountState={state.insuranceOption.discounts}
                         totalPrice={state.userTotalSum}
                         userVehiclePower={state.userVehiclePower}
-                        coverageAmount={2}
+                        coverageAmount={state.insuranceOption?.coverages&& Object.keys(state.insuranceOption.coverages).length}
                 />
             </header>
             <div className="content">
@@ -171,7 +169,7 @@ const Main = ()=> {
                     <UserForm saveUserData={saveUserData} userPriceMatch={state.userPriceMatch} coverageAmount={2} />
                 </main>
                 <aside className="right-sidebar">
-                    <SideBar coveragesConfig={coveragesConfig}/>
+                    <SideBar onChange={updateInsuranceDetails} />
                 </aside>
             </div>
             <div className='insurance-configuration'>
