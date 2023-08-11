@@ -1,4 +1,5 @@
 # How  to run the project
+ - Clone the repo 
  - there are 2 folders,  api and ui  responsible for ui and server part accordingly , 
  - inside each folder run  npm i ,
  - in api folder run  npm run dev , to run the server 
